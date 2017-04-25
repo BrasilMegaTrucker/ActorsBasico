@@ -3,18 +3,18 @@
     v0.1 - 07/05/2015:
         - Script Criado.
         - Comandos para criar, destruir e alterar actors.
-        - Lista de comandos para saber de todos os comandos dispon√≠veis.
-        - Poss√≠vel executar/parar anima√ß√£o em um ou todos actors.
+        - Lista de comandos para saber de todos os comandos disponÌveis.
+        - PossÌvel executar/parar animaÁ„o em um ou todos actors.
     v0.1 R2 - 07/05/2015:
-        - Comando /criaractor corrigido, setando a posi√ß√£o do jogador para o lado, para n√£o ocorrer bugs.
+        - Comando /criaractor corrigido, setando a posiÁ„o do jogador para o lado, para n„o ocorrer bugs.
         - Debugs desabilitados.
     v0.1 R3 - 08/05/2015:
         - Comando /criaractor alterado. Agora actors podem ser identificados com nomes.
-        - Novo comando: /reviveractor. Ele revive o actor na mesma posi√ß√£o.
+        - Novo comando: /reviveractor. Ele revive o actor na mesma posiÁ„o.
         - Labels identificam os actors com seu id e nome.
         - Novo comando: /alteraractornome. Alterar o nome do actor.
-        - Os comandos s√≥ podem ser utilizados por administradores (RCON).
-        - Comando /veractors exibe agora 25 resultados por p√°gina.
+        - Os comandos sÛ podem ser utilizados por administradores (RCON).
+        - Comando /veractors exibe agora 25 resultados por p·gina.
     v0.1 R4 - 24/05/2015:
         - Comando /exportaractors. Gera um script semi pronto com todos os actors criados para um arquivo desejado.
 ################################################################################
@@ -22,9 +22,10 @@
         - Possibilidade de usar o plugin streamer (v2.9+).
             Defina USE_STREAMER. Com isto, o LIMITE foi aumentado!
         - Comando /alteraractornome para /nomeactor.
-        - Novo comando: /editaractor
-            Mover o actor como se fosse objeto
+        - Novo comando: /editaractor (mover o actor como se fosse objeto)
         - Adicionado comandos abreviados
+     v0.2 R1-2 - 25/04/2017:
+        - CorreÁıes de bugs
 
 
 
@@ -34,7 +35,7 @@
 #include <zcmd>
 #include <sscanf2>
 
-//#define USE_STREAMER
+#define USE_STREAMER
 #if defined USE_STREAMER
     #include <streamer>       // 2.9++
     #if !defined CreateDynamicActor
@@ -56,21 +57,21 @@ enum cmd_infos
 new cmds_Actor[][cmd_infos] = {
     {"/criaractor [skin id] [nome]",                        "/cac",         "Cria um actor com a skin desejada e com um nome"},
     {"/destruiractor [actor id]",                           "/dac",         "Destroi um actor"},
-    {"/destruirtodosactors",                                "/dta",         "Destr√≥i todos os actors do servidor"},
+    {"/destruirtodosactors",                                "/dta",         "DestrÛi todos os actors do servidor"},
     {"/animaractor [actor id] [animlib] [animname] [loop]", "/ania",        "Anima um actor"},
-    {"/pararanimactor [actor id]",                          "/pana",        "Para a anima√ß√£o de um actor"},
+    {"/pararanimactor [actor id]",                          "/pana",        "Para a animaÁ„o de um actor"},
     {"/animtodosactors [animlib] [animname] [loop]",        "/anta",        "Anima todos os actors do servidor"},
-    {"/pararanimtodosactors",                               "/panta",       "Para a anima√ß√£o de todos os actors"},
-    {"/actorpos [actor id] [x] [y] [z] [rota√ß√£o]",          "/apos",        "Seta a posi√ß√£o de um actor"},
+    {"/pararanimtodosactors",                               "/panta",       "Para a animaÁ„o de todos os actors"},
+    {"/actorpos [actor id] [x] [y] [z] [rotaÁ„o]",          "/apos",        "Seta a posiÁ„o de um actor"},
     {"/actormundo [actor id] [mundo virtual]",              "/amun",        "Seta o mundo virtual de um actor"},
     {"/actorvuneravel [actor id]",                          "/acin",        "Deixa um actor vuneravel/invuneravel"},
     {"/actorvida [actor id] [vida]",                        "/acv",         "Seta a vida de um actor"},
     {"/reviveractor [actor id]",                            "/reva",        "Revive um actor"},
     {"/nomeactor [actor id] [novo nome]",                   "/nac",         "Altera o nome de um actor"},
-    {"/editaractor [actor id]",                             "/eda",         "Edita a posi√ß√£o de um actor"},
+    {"/editaractor [actor id]",                             "/eda",         "Edita a posiÁ„o de um actor"},
     {"/veractors",                                          "/va",          "Visualiza os actors criados"},
     {"/exportaractors [arquivo.pwn]",                       "/exa",         "Gera um script semi-pronto para uso dos actors criados"},
-    {"/comandosactor",                                      "/acmd",        "Visualiza a p√°gina de comandos de actors"}
+    {"/comandosactor",                                      "/acmd",        "Visualiza a p·gina de comandos de actors"}
 };
 
 enum i_actor
@@ -90,7 +91,7 @@ public OnFilterScriptInit()
         format(ActorData[i][ActorNome], 32, "");
     }
     print("*****************************************");
-    print("**** Actor debug - b√°sico [CARREGADO]****");
+    print("**** Actor debug - b·sico [CARREGADO]****");
     #if defined USE_STREAMER
         print("******* Utilizando plugin: streamer ******");
     #endif
@@ -121,13 +122,13 @@ public OnFilterScriptExit()
         }
     }
     print("*****************************************");
-    print("**** Actor debug - b√°sico [DESLIGADO]****");
+    print("**** Actor debug - b·sico [DESLIGADO]****");
     print("*****************************************");
 	return 1;
 }
 
 public OnPlayerSpawn(playerid) {
-    if(IsPlayerAdmin(playerid)) return SendClientMessage(playerid, -1, "{FFFF00}* Sistema de Testes de Actors est√° ligado. Use /acmd para ver os comandos!");
+    if(IsPlayerAdmin(playerid)) return SendClientMessage(playerid, -1, "{FFFF00}* Sistema de Testes de Actors est· ligado. Use /acmd para ver os comandos!");
     return 1;
 }
 /////////// Comandos //////////////
@@ -135,13 +136,13 @@ CMD:criaractor(playerid, params[]) {
     if(!IsPlayerAdmin(playerid)) return 0;
     new skin_actor, Nome[32];
     if(sscanf(params, "is[32]", skin_actor, Nome)) return SendClientMessage(playerid, -1, "{FF0000}Use: /criaractor [skin id] [nome]");
-    if(skin_actor < 0 || skin_actor > 311) return SendClientMessage(playerid, -1, "{FF0000}O id √© inv√°lido!");
+    if(skin_actor < 0 || skin_actor > 311) return SendClientMessage(playerid, -1, "{FF0000}O id È inv·lido!");
     new Float:pP[4], Msg[144], Actorid;
     GetPlayerPos(playerid, pP[0], pP[1], pP[2]);
     GetPlayerFacingAngle(playerid, pP[3]);
     #if !defined USE_STREAMER
         Actorid = CreateActor(skin_actor, pP[0], pP[1], pP[2], pP[3]);
-        if(!IsValidActor(Actorid)) return SendClientMessage(playerid, -1, "{FF0000}Ocorreu um erro. Provavelmente o m√°ximo de actors foi atingido!");
+        if(!IsValidActor(Actorid)) return SendClientMessage(playerid, -1, "{FF0000}Ocorreu um erro. Provavelmente o m·ximo de actors foi atingido!");
         SetActorVirtualWorld(Actorid, GetPlayerVirtualWorld(playerid));
         format(Msg, 144, "%s (%i)", Nome, Actorid);
         ActorData[Actorid][ActorLabel] = Create3DTextLabel(Msg, 0xFFFF00AA, pP[0], pP[1], pP[2] + 1.0, 30.0, GetPlayerVirtualWorld(playerid));
@@ -149,8 +150,8 @@ CMD:criaractor(playerid, params[]) {
         SetObjectMaterialText(ActorData[Actorid][ActorObject], " ");
     #else
         Actorid = CreateDynamicActor(skin_actor, pP[0], pP[1], pP[2], pP[3], _, _, GetPlayerVirtualWorld(playerid));
-        if(!IsValidDynamicActor(Actorid)) return SendClientMessage(playerid, -1, "{FF0000}Ocorreu um erro. Provavelmente o m√°ximo de actors foi atingido!");
-        if(Actorid >= MAX_ACTORS) return DestroyDynamicActor(Actorid), SendClientMessage(playerid, -1, "{FF0000}Voc√™ atingiu o limite de actors.");
+        if(!IsValidDynamicActor(Actorid)) return SendClientMessage(playerid, -1, "{FF0000}Ocorreu um erro. Provavelmente o m·ximo de actors foi atingido!");
+        if(Actorid >= MAX_ACTORS) return DestroyDynamicActor(Actorid), SendClientMessage(playerid, -1, "{FF0000}VocÍ atingiu o limite de actors.");
         format(Msg, 144, "%s (%i)", Nome, Actorid);
         ActorData[Actorid][ActorLabel] = CreateDynamic3DTextLabel(Msg, 0xFFFF00AA, pP[0], pP[1], pP[2] + 1.0, 30.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, GetPlayerVirtualWorld(playerid));
         ActorData[Actorid][ActorObject] = CreateDynamicObject(1924, pP[0], pP[1], pP[2], 0.0, 0.0, pP[3]);
@@ -168,12 +169,12 @@ CMD:destruiractor(playerid, params[]) {
     new actorid, Msg[144];
     if(sscanf(params, "i", actorid)) return SendClientMessage(playerid, -1, "{FF0000}Use: /destruiractor [actor id]");
     #if !defined USE_STREAMER
-        if(!IsValidActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv√°lido.");
+        if(!IsValidActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv·lido.");
         DestroyActor(actorid);
         Delete3DTextLabel(ActorData[actorid][ActorLabel]);
         DestroyObject(ActorData[actorid][ActorObject]);
     #else
-        if(!IsValidDynamicActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv√°lido.");
+        if(!IsValidDynamicActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv·lido.");
         DestroyDynamicActor(actorid);
         DestroyDynamic3DTextLabel(ActorData[actorid][ActorLabel]);
         DestroyDynamicObject(ActorData[actorid][ActorObject]);
@@ -209,7 +210,7 @@ CMD:destruirtodosactors(playerid, params[]) {
         format(ActorData[i][ActorNome], 32, "");
         actors++;
     }
-    if(actors==0) return SendClientMessage(playerid, -1, "{FF0000}N√£o h√° actors!");
+    if(actors==0) return SendClientMessage(playerid, -1, "{FF0000}N„o h· actors!");
     format(Msg, 144, "{FFFF00}Foram destruidos %i actors.", actors);
     return SendClientMessage(playerid, -1, Msg);
 }
@@ -218,15 +219,15 @@ CMD:animaractor(playerid, params[]) {
     new actorid, animlib[32], animname[32], loop, Msg[144];
     if(sscanf(params, "is[32]s[32]i", actorid, animlib, animname, loop)) return SendClientMessage(playerid, -1, "{FF0000}Use: /animaractor [actor id] [animlib] [animname] [loop (0-1)");
     #if !defined USE_STREAMER
-        if(!IsValidActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv√°lido.");
+        if(!IsValidActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv·lido.");
         ClearActorAnimations(actorid);
         ApplyActorAnimation(actorid, animlib, animname, 4.1, loop, 1, 1, 0, 0);
     #else
-        if(!IsValidDynamicActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv√°lido.");
+        if(!IsValidDynamicActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv·lido.");
         ClearDynamicActorAnimations(actorid);
         ApplyDynamicActorAnimation(actorid, animlib, animname, 4.1, loop, 1, 1, 0, 0);
     #endif
-    format(Msg, 144, "{00FF00}Actor %s (%i) executando anima√ß√£o da lib %s anima√ß√£o %s (%s)", ActorData[actorid][ActorNome], actorid, animlib, animname, (loop == 0 ? ("sem loop") : ("com loop")));
+    format(Msg, 144, "{00FF00}Actor %s (%i) executando animaÁ„o da lib %s animaÁ„o %s (%s)", ActorData[actorid][ActorNome], actorid, animlib, animname, (loop == 0 ? ("sem loop") : ("com loop")));
     return SendClientMessage(playerid, -1, Msg);
 }
 CMD:pararanimactor(playerid, params[]) {
@@ -234,13 +235,13 @@ CMD:pararanimactor(playerid, params[]) {
     new actorid, Msg[144];
     if(sscanf(params, "i", actorid)) return SendClientMessage(playerid, -1, "{FF0000}Use: /pararanimactor [actor id]");
     #if !defined USE_STREAMER
-    if(!IsValidActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv√°lido.");
+    if(!IsValidActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv·lido.");
     ClearActorAnimations(actorid);
     #else
-    if(!IsValidDynamicActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv√°lido.");
+    if(!IsValidDynamicActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv·lido.");
     ClearDynamicActorAnimations(actorid);
     #endif
-    format(Msg, 144, "{a9c4e4}Anima√ß√£o do actor %s (%i) foi parada!", ActorData[actorid][ActorNome], actorid);
+    format(Msg, 144, "{a9c4e4}AnimaÁ„o do actor %s (%i) foi parada!", ActorData[actorid][ActorNome], actorid);
     return SendClientMessage(playerid, -1, Msg);
 }
 CMD:animtodosactors(playerid, params[]) {
@@ -260,7 +261,7 @@ CMD:animtodosactors(playerid, params[]) {
         ApplyDynamicActorAnimation(i, animlib, animname, 4.1, loop, 1, 1, 0, 0);
     }
     #endif
-    format(Msg, 144, "{00FF00}Todos os actors est√£o executando a anima√ß√£o da lib %s anima√ß√£o %s (%s)", animlib, animname, (loop == 0 ? ("sem loop") : ("com loop")));
+    format(Msg, 144, "{00FF00}Todos os actors est„o executando a animaÁ„o da lib %s animaÁ„o %s (%s)", animlib, animname, (loop == 0 ? ("sem loop") : ("com loop")));
     return SendClientMessage(playerid, -1, Msg);
 }
 CMD:pararanimtodosactors(playerid, params[]) {
@@ -276,14 +277,14 @@ CMD:pararanimtodosactors(playerid, params[]) {
         ClearDynamicActorAnimations(i);
     }
     #endif
-    return SendClientMessage(playerid, -1, "{FFFF00}A anima√ß√£o de todos os actors existentes foram paradas.");
+    return SendClientMessage(playerid, -1, "{FFFF00}A animaÁ„o de todos os actors existentes foram paradas.");
 }
 CMD:actorpos(playerid, params[]) {
     if(!IsPlayerAdmin(playerid)) return 0;
     new actorid, Float:apos[4], Msg[144];
-    if(sscanf(params, "iffff", actorid, apos[0], apos[1], apos[2], apos[3])) return SendClientMessage(playerid, -1, "{FF0000}Use: /actorpos [actorid] [x] [y] [z] [rota√ß√£o]");
+    if(sscanf(params, "iffff", actorid, apos[0], apos[1], apos[2], apos[3])) return SendClientMessage(playerid, -1, "{FF0000}Use: /actorpos [actorid] [x] [y] [z] [rotaÁ„o]");
     #if !defined USE_STREAMER
-    if(!IsValidActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv√°lido.");
+    if(!IsValidActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv·lido.");
     DestroyObject(ActorData[actorid][ActorObject]);
     SetActorPos(actorid, apos[0], apos[1], apos[2]);
     SetActorFacingAngle(actorid, apos[3]);
@@ -293,7 +294,7 @@ CMD:actorpos(playerid, params[]) {
     format(Msg, 144, "%s (%i)", ActorData[actorid][ActorNome], actorid);
     ActorData[actorid][ActorLabel] = Create3DTextLabel(Msg, 0xFFFF00AA, apos[0], apos[1], apos[2] + 1.0, 30.0, GetActorVirtualWorld(actorid));
     #else
-    if(!IsValidDynamicActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv√°lido.");
+    if(!IsValidDynamicActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv·lido.");
     DestroyDynamicObject(ActorData[actorid][ActorObject]);
     SetDynamicActorPos(actorid, apos[0], apos[1], apos[2]);
     SetDynamicActorFacingAngle(actorid, apos[3]);
@@ -303,7 +304,7 @@ CMD:actorpos(playerid, params[]) {
     format(Msg, 144, "%s (%i)", ActorData[actorid][ActorNome], actorid);
     ActorData[actorid][ActorLabel] = CreateDynamic3DTextLabel(Msg, 0xFFFF00AA, apos[0], apos[1], apos[2] + 1.0, 30.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, GetPlayerVirtualWorld(playerid));
     #endif
-    format(Msg, 144, "{a9c4e4}Actor %s (%i) em x=%4.2f - y=%4.2f - z=%4.2f - rota√ß√£o=%4.2f", ActorData[actorid][ActorNome], actorid, apos[0], apos[1], apos[2], apos[3]);
+    format(Msg, 144, "{a9c4e4}Actor %s (%i) em x=%4.2f - y=%4.2f - z=%4.2f - rotaÁ„o=%4.2f", ActorData[actorid][ActorNome], actorid, apos[0], apos[1], apos[2], apos[3]);
     return SendClientMessage(playerid, -1, Msg);
 }
 CMD:actormundo(playerid, params[]) {
@@ -311,14 +312,14 @@ CMD:actormundo(playerid, params[]) {
     new actorid, amundo, Msg[144], Float:apos[3];
     if(sscanf(params, "ii", actorid, amundo)) return SendClientMessage(playerid, -1, "{FF0000}Use: /actormundo [actorid] [mundo]");
     #if !defined USE_STREAMER
-    if(!IsValidActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv√°lido.");
+    if(!IsValidActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv·lido.");
     GetActorPos(actorid, apos[0], apos[1], apos[2]);
     SetActorVirtualWorld(actorid, amundo);
     Delete3DTextLabel(ActorData[actorid][ActorLabel]);
     format(Msg, 144, "%s (%i)", ActorData[actorid][ActorNome], actorid);
     ActorData[actorid][ActorLabel] = Create3DTextLabel(Msg, 0xFFFF00AA, apos[0], apos[1], apos[2] + 1.0, 30.0, amundo);
     #else
-    if(!IsValidDynamicActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv√°lido.");
+    if(!IsValidDynamicActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv·lido.");
     GetDynamicActorPos(actorid, apos[0], apos[1], apos[2]);
     SetDynamicActorVirtualWorld(actorid, amundo);
     DestroyDynamic3DTextLabel(ActorData[actorid][ActorLabel]);
@@ -334,24 +335,24 @@ CMD:actorvuneravel(playerid, params[]) {
     new actorid, Msg[144];
     if(sscanf(params, "i", actorid)) return SendClientMessage(playerid, -1, "{FF0000}Use:/actorvuneravel [actorid]");
     #if !defined USE_STREAMER
-    if(!IsValidActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv√°lido.");
+    if(!IsValidActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv·lido.");
     if(IsActorInvulnerable(actorid)) {
         SetActorInvulnerable(actorid, false);
-        format(Msg, 144, "{FFFF00}Actor %s (%i) agora √© vuner√°vel.", ActorData[actorid][ActorNome], actorid);
+        format(Msg, 144, "{FFFF00}Actor %s (%i) agora È vuner·vel.", ActorData[actorid][ActorNome], actorid);
     }
     else {
         SetActorInvulnerable(actorid, true);
-        format(Msg, 144, "{FFFF00}Actor %s (%i) agora √© invuner√°vel.", ActorData[actorid][ActorNome], actorid);
+        format(Msg, 144, "{FFFF00}Actor %s (%i) agora È invuner·vel.", ActorData[actorid][ActorNome], actorid);
     }
     #else
-    if(!IsValidDynamicActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv√°lido.");
+    if(!IsValidDynamicActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv·lido.");
     if(IsDynamicActorInvulnerable(actorid)) {
         SetDynamicActorInvulnerable(actorid, false);
-        format(Msg, 144, "{FFFF00}Actor %s (%i) agora √© vuner√°vel.", ActorData[actorid][ActorNome], actorid);
+        format(Msg, 144, "{FFFF00}Actor %s (%i) agora È vuner·vel.", ActorData[actorid][ActorNome], actorid);
     }
     else {
         SetDynamicActorInvulnerable(actorid, true);
-        format(Msg, 144, "{FFFF00}Actor %s (%i) agora √© invuner√°vel.", ActorData[actorid][ActorNome], actorid);
+        format(Msg, 144, "{FFFF00}Actor %s (%i) agora È invuner·vel.", ActorData[actorid][ActorNome], actorid);
     }
     #endif
     SendClientMessage(playerid, -1, Msg);
@@ -362,10 +363,10 @@ CMD:actorvida(playerid, params[]) {
     new actorid, Float:avida, Msg[144];
     if(sscanf(params, "if", actorid, avida)) return SendClientMessage(playerid, -1, "{FF0000}Use: /actorvida [actorid] [vida]");
     #if !defined USE_STREAMER
-    if(!IsValidActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv√°lido.");
+    if(!IsValidActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv·lido.");
     SetActorHealth(actorid, avida);
     #else
-    if(!IsValidDynamicActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv√°lido.");
+    if(!IsValidDynamicActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv·lido.");
     SetDynamicActorHealth(actorid, avida);
     #endif
     format(Msg, 144, "{a9c4e4}Vida do actor %s (%i) foi setada para: %4.2f", ActorData[actorid][ActorNome], actorid, avida);
@@ -376,7 +377,7 @@ CMD:reviveractor(playerid, params[]) {
     if(!IsPlayerAdmin(playerid)) return 0;
     new actorid, Msg[144];
     if(sscanf(params, "i", actorid)) return SendClientMessage(playerid, -1, "{FF0000}Use: /reviveractor [actorid]");
-    if(!ResyncActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Ocorreu um erro e o actor n√£o pode reviver :(");
+    if(!ResyncActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Ocorreu um erro e o actor n„o pode reviver :(");
     format(Msg, 144, "{FFFF00}Actor %s (%i) revivido!", ActorData[actorid][ActorNome], actorid);
     SendClientMessage(playerid, -1, Msg);
     return 1;
@@ -386,12 +387,12 @@ CMD:nomeactor(playerid,params[]) {
     new actorid, novoNome[32], Msg[144];
     if(sscanf(params, "is[32]", actorid, novoNome)) return SendClientMessage(playerid, -1, "{FF0000}Use: /nomeactor [actor id] [novo nome]");
     #if !defined USE_STREAMER
-    if(!IsValidActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv√°lido.");
+    if(!IsValidActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv·lido.");
     #else
-    if(!IsValidDynamicActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv√°lido.");
+    if(!IsValidDynamicActor(actorid)) return SendClientMessage(playerid, -1, "{FF0000}Actor inv·lido.");
     #endif
-    if(!strcmp(ActorData[actorid][ActorNome], novoNome, true)) return SendClientMessage(playerid, -1, "{FF0000}O novo nome √© o atual do actor!");
-    format(Msg, 144, "{a9c4e4}Voc√™ alterou o nome do actor %s (%i) para %s.", ActorData[actorid][ActorNome], actorid, novoNome);
+    if(!strcmp(ActorData[actorid][ActorNome], novoNome, true)) return SendClientMessage(playerid, -1, "{FF0000}O novo nome È o atual do actor!");
+    format(Msg, 144, "{a9c4e4}VocÍ alterou o nome do actor %s (%i) para %s.", ActorData[actorid][ActorNome], actorid, novoNome);
     SendClientMessage(playerid, -1, Msg);
     format(ActorData[actorid][ActorNome], 32, "%s", novoNome);
     format(Msg, 144, "%s (%i)", novoNome, actorid);
@@ -406,7 +407,7 @@ CMD:exportaractors(playerid, params[]) {
     if(!IsPlayerAdmin(playerid)) return 0;
     new arquivo_nome[128];
     if(sscanf(params, "s[128]", arquivo_nome)) return SendClientMessage(playerid, -1, "{FF0000}Use: /exportaractors [nome do arquivo.pwn]");
-    if(fexist(arquivo_nome)) return SendClientMessage(playerid, -1, "{FF0000}Este arquivo existe no diret√≥rio. Por favor insira outro nome!");
+    if(fexist(arquivo_nome)) return SendClientMessage(playerid, -1, "{FF0000}Este arquivo existe no diretÛrio. Por favor insira outro nome!");
     new File:pActor, str[100], Msg[144];
     pActor = fopen(arquivo_nome, io_append);
     #if !defined USE_STREAMER
@@ -461,7 +462,7 @@ CMD:veractors(playerid, params[]) {
 CMD:comandosactor(playerid) {
     if(!IsPlayerAdmin(playerid)) return 0;
     new di_actor[1500];
-    strcat(di_actor, "Comando\tAbreviado\tDescri√ß√£o\n");
+    strcat(di_actor, "Comando\tAbreviado\tDescriÁ„o\n");
     for(new i; i < sizeof(cmds_Actor); i++) {
         strcat(di_actor, cmds_Actor[i][Comando]);
         strcat(di_actor, "\t");
@@ -477,10 +478,10 @@ CMD:editaractor(playerid, params[]) {
     new actorid, Msg[144];
     if(sscanf(params, "i", actorid)) return SendClientMessage(playerid, -1, "{FF0000}Use: /editaractor [actorid]");
     #if !defined USE_STREAMER
-    if(!IsValidActor(actorid) || !IsValidObject(ActorData[actorid][ActorObject])) return SendClientMessage(playerid, -1, "{FF0000}Actor inv√°lido para edi√ß√£o.");
+    if(!IsValidActor(actorid) || !IsValidObject(ActorData[actorid][ActorObject])) return SendClientMessage(playerid, -1, "{FF0000}Actor inv·lido para ediÁ„o.");
     EditObject(playerid, ActorData[actorid][ActorObject]);
     #else
-    if(!IsValidDynamicActor(actorid) || !IsValidDynamicObject(ActorData[actorid][ActorObject])) return SendClientMessage(playerid, -1, "{FF0000}Actor inv√°lido para edi√ß√£o.");
+    if(!IsValidDynamicActor(actorid) || !IsValidDynamicObject(ActorData[actorid][ActorObject])) return SendClientMessage(playerid, -1, "{FF0000}Actor inv·lido para ediÁ„o.");
     EditDynamicObject(playerid, ActorData[actorid][ActorObject]);
     #endif
     format(Msg, sizeof(Msg), "{FFFF00}* Editando actor %s (%i)", ActorData[actorid][ActorNome], actorid);
@@ -532,7 +533,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
                     GetActorFacingAngle(i, apos[3]);
                     SetPlayerPos(playerid, apos[0] + 1.0, apos[1] + 1.0, apos[2] + 1.5);
                     SetPlayerFacingAngle(i, apos[3]);
-                    format(Msg, 144, "{a9c4e4}Voc√™ foi teleportado ao actor %s (%i)", ActorData[i][ActorNome], i);
+                    format(Msg, 144, "{a9c4e4}VocÍ foi teleportado ao actor %s (%i)", ActorData[i][ActorNome], i);
                     SendClientMessage(playerid, -1, Msg);
                     break;
                 }
@@ -546,7 +547,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
                     GetDynamicActorFacingAngle(i, apos[3]);
                     SetPlayerPos(playerid, apos[0] + 1.0, apos[1] + 1.0, apos[2] + 1.5);
                     SetPlayerFacingAngle(i, apos[3]);
-                    format(Msg, 144, "{a9c4e4}Voc√™ foi teleportado ao actor %s (%i)", ActorData[i][ActorNome], i);
+                    format(Msg, 144, "{a9c4e4}VocÍ foi teleportado ao actor %s (%i)", ActorData[i][ActorNome], i);
                     SendClientMessage(playerid, -1, Msg);
                     break;
                 }
@@ -571,19 +572,18 @@ public OnPlayerGiveDamageActor(playerid, damaged_actorid, Float:amount, weaponid
 public OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Float:fY, Float:fZ, Float:fRotX, Float:fRotY, Float:fRotZ)
 {
     if(playerobject) return 1;
-    new Float:oldPos[6], Float:actorPos[4], Msg[144];
+    new Float:oldPos[6], Msg[144];
     GetObjectPos(objectid, oldPos[0], oldPos[1], oldPos[2]);
     GetObjectRot(objectid, oldPos[3], oldPos[4], oldPos[5]);
     for(new i; i <= GetActorPoolSize(); i++) {
         if(ActorData[i][ActorObject] == objectid) {
-            GetActorPos(i, actorPos[0], actorPos[1], actorPos[2]);
-            GetActorFacingAngle(i, actorPos[3]);
             switch(response) {
                 case EDIT_RESPONSE_CANCEL:{
                     SetObjectPos(objectid, oldPos[0], oldPos[1], oldPos[2]);
                     SetObjectRot(objectid, oldPos[3], oldPos[4], oldPos[5]);
-                    SetActorPos(i, actorPos[0], actorPos[1], actorPos[2]);
-                    SetActorFacingAngle(i, actorPos[3]);
+                    SetActorPos(i, oldPos[0], oldPos[1], oldPos[2]);
+                    SetActorFacingAngle(i, oldPos[5]);
+                    ResyncActor(i);
                 }
                 case EDIT_RESPONSE_UPDATE: {
                     SetActorPos(i, fX, fY, fZ);
@@ -597,6 +597,7 @@ public OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, 
                     Delete3DTextLabel(ActorData[i][ActorLabel]);
                     format(Msg, sizeof(Msg), "%s (%i)", ActorData[i][ActorNome], i);
                     ActorData[i][ActorLabel] = Create3DTextLabel(Msg, 0xFFFF00AA, fX, fY, fZ + 1.0, 30.0, GetActorVirtualWorld(i));
+                    ResyncActor(i);
                 }
             }
             break;
@@ -614,19 +615,17 @@ public OnPlayerGiveDamageDynamicActor(playerid, actorid, Float:amount, weaponid,
     return 1;
 }
 public OnPlayerEditDynamicObject(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz) {
-    new Float:oldPos[6], Float:aPos[4], Msg[144];
+    new Float:oldPos[6], Msg[144];
     GetDynamicObjectPos(objectid, oldPos[0], oldPos[1], oldPos[2]);
     GetDynamicObjectRot(objectid, oldPos[3], oldPos[4], oldPos[5]);
     for(new i; i <= Streamer_CountItems(STREAMER_TYPE_ACTOR, 1); i++) {
         if(ActorData[i][ActorObject] == objectid) {
-            GetDynamicActorPos(i, aPos[0], aPos[1], aPos[2]);
-            GetDynamicActorFacingAngle(i, aPos[3]);
             switch(response) {
                 case EDIT_RESPONSE_CANCEL:{
                     SetDynamicObjectPos(objectid, oldPos[0], oldPos[1], oldPos[2]);
                     SetDynamicObjectRot(objectid, oldPos[3], oldPos[4], oldPos[5]);
-                    SetDynamicActorPos(i, aPos[0], aPos[1], aPos[2]);
-                    SetDynamicActorFacingAngle(i, aPos[3]);
+                    SetDynamicActorPos(i, oldPos[0], oldPos[1], oldPos[2]);
+                    SetDynamicActorFacingAngle(i, oldPos[5]);
                 }
                 case EDIT_RESPONSE_UPDATE: {
                     SetDynamicActorPos(i, x, y, z);
@@ -653,7 +652,7 @@ public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY
     //printf("[DEBUG] OnPlayerWeaponShot(%i, %i, %i, %i, %f, %f, %f)", playerid, weaponid, hittype, hitid, fX, fY, fZ);
     return 1;
 }
-// Fun√ß√µes do FS
+// FunÁıes do FS
 stock VerActors(playerid) {
     new di[2500], actors, Float:pA[3], Float:aVida;
     strcat(di, "Actor\tCoordenadas\tMundo\tVida\n");
@@ -662,7 +661,7 @@ stock VerActors(playerid) {
         if(!IsValidActor(i)) continue;
         if(actors > 25) {
             SetPVarInt(playerid, "dialog_proxima_lista", i);
-            strcat(di, "{FFFF00}Pr√≥xima p√°gina\n");
+            strcat(di, "{FFFF00}PrÛxima p·gina\n");
             break;
         }
         GetActorPos(i, pA[0], pA[1], pA[2]);
@@ -675,7 +674,7 @@ stock VerActors(playerid) {
         if(!IsValidDynamicActor(i)) continue;
         if(actors > 25) {
             SetPVarInt(playerid, "dialog_proxima_lista", i);
-            strcat(di, "{FFFF00}Pr√≥xima p√°gina\n");
+            strcat(di, "{FFFF00}PrÛxima p·gina\n");
             break;
         }
         GetDynamicActorPos(i, pA[0], pA[1], pA[2]);
@@ -684,7 +683,7 @@ stock VerActors(playerid) {
         actors++;
     }
     #endif
-    if(actors==0) return SendClientMessage(playerid, -1, "{FF0000}N√£o h√° actors!");
+    if(actors==0) return SendClientMessage(playerid, -1, "{FF0000}N„o h· actors!");
     ShowPlayerDialog(playerid, DIALOG_VERACTORS, DIALOG_STYLE_TABLIST_HEADERS, "{FF0000}# {FFFFFF}Visualizando actors", di, "Ok", "Cancelar");
     return 1;
 }
@@ -733,7 +732,7 @@ public RestoreActor(actorid, worldid, Float:x, Float:y, Float:z)
 
 /*********************************************************************************************************
 **********                                                                                    ************
-**********                          Feito por N√≠colas Corr√™a                                  ************
+**********                          Feito por NÌcolas CorrÍa                                  ************
 **********                         www.brasilmegatrucker.com                                  ************
 **********                                                                                    ************
 *********************************************************************************************************/
